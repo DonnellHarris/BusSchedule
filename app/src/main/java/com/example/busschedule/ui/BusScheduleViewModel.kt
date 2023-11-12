@@ -27,9 +27,10 @@ import kotlinx.coroutines.flow.Flow
 
 class BusScheduleViewModel(private val busScheduleDao: BusScheduleDAO): ViewModel() {
 
-    // Get full bus schedule from Room DB
-    fun getFullSchedule(): Flow<List<BusSchedule>> = busScheduleDao.getAll()
-    // Get bus schedule based on the stop name from Room DB
+    // Get full bus schedule
+    fun getFullSchedule(): Flow<List<BusSchedule>> = busScheduleDao.getAllStops()
+
+    // Get schedule by stop name
     fun getScheduleFor(stopName: String): Flow<List<BusSchedule>> =
         busScheduleDao.getByStopName(stopName)
 
@@ -38,7 +39,6 @@ class BusScheduleViewModel(private val busScheduleDao: BusScheduleDAO): ViewMode
             initializer {
                 val application = (this[APPLICATION_KEY] as BusScheduleApp)
                 BusScheduleViewModel(application.database.busScheduleDao())
-                //BusScheduleViewModel()
             }
         }
     }
